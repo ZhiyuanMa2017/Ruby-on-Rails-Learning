@@ -28,4 +28,4 @@ rails db:create
 
 
 rails g scaffold friendas first_name:string last_name:string email:string phone:string twitter:string
-* ```
+```
