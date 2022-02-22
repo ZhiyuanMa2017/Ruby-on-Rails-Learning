@@ -1,0 +1,73 @@
+<%= form_with(model: course) do |form| %>
+  <% if course.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+
+      <ul>
+        <% course.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :weekday_one %>
+    <%= form.select :weekday_one, ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :weekday_two %>
+    <%= form.select :weekday_two, [nil, 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :start_time %>
+    <%= form.text_field :start_time, placeholder: 'HH:MM' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :end_time %>
+    <%= form.text_field :end_time, placeholder: 'HH:MM' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :course_code %>
+    <%= form.text_field :course_code, placeholder: 'ABC123' %>
+  </div>
+
+  <div class="field">
+    <%= form.label :capacity %>
+    <%= form.number_field :capacity %>
+  </div>
+
+  <!--  <div class="field">-->
+  <%#= form.label :student_num %>
+  <%#= form.number_field :student_num %>
+  <!--  </div>-->
+
+<!--  <div class="field">-->
+    <%#= form.label :status %>
+    <%#= form.select :status,["OPEN", "CLOSED"] %>
+<!--  </div>-->
+
+  <div class="field">
+    <%= form.label :class_room %>
+    <%= form.text_field :class_room %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  <%#= link_to 'Back', courses_path %>
+<% end %>

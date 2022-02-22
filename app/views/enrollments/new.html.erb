@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2">
+      <%= render "shared/sidenav" %>
+
+    </div>
+    <div class="col-sm-10">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <% if teacher_logged_in? %><h3 class="panel-title">Enrollment Management: <%=@course.name%></h3><% end %>
+          <% if admin_logged_in? %><h3 class="panel-title">Enrollment Management: <%=@course.name%></h3><% end %>
+
+        </div>
+        <div class="panel-body" style="min-height: 450px">
+          <table class="table table-striped table-hover">
+            <thead>
+
+            <tr>
+              <th>Name</th>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Date of Birth</th>
+              <th>Phone number</th>
+              <th>Major</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%= user.id %></td>
+                <td><%= user.email %></td>
+                <td><%= user.birthday %></td>
+                <td><%= user.phone_number %></td>
+                <td><%= user.major %></td>
+
+                <% if teacher_logged_in? %>
+                  <td> <%= link_to "Add", new_enrollment_path(:user_id => user.id, :course_id => @course.id), method: :post, data: { confirm: "Are you sure?" } %> </td>
+                <% end %>
+                <% if admin_logged_in? %>
+                  <td> <%= link_to "Add", new_enrollment_path(:user_id => user.id, :course_id => @course.id), method: :post, data: { confirm: "Are you sure?" } %> </td>
+                <% end %>
+            <% end %>
+
+            </tr>
+            <%# end %>
+            </tbody>
+          </table>
+          <%= will_paginate @users %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

@@ -1,0 +1,235 @@
+<div class="panel-group" id="accordion">
+
+  <% if teacher_logged_in? || student_logged_in? || admin_logged_in? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+
+          <% if teacher_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#CourseCollapse"><span class="glyphicon glyphicon-user"></span>
+              Courses</a>
+          <% end %>
+
+          <% if student_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#CourseCollapse"><span class="glyphicon glyphicon-user"></span>
+              Courses</a>
+          <% end %>
+
+          <% if admin_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#CourseCollapse"><span class="glyphicon glyphicon-user"></span>
+              Courses</a>
+          <% end %>
+        </h4>
+      </div>
+
+      <div id="CourseCollapse" class="panel-collapse collapse <%= "in" if ["courses"].include?(params[:controller]) %>">
+        <ul class="list-group">
+
+          <% if admin_logged_in? %>
+            <li class="list-group-item">
+              <%= link_to courses_path do %>
+                <span class="glyphicon glyphicon-chevron-right"></span> All Courses
+              <% end %>
+            </li>
+          <% end %>
+
+
+
+          <% if admin_logged_in? %>
+            <li class="list-group-item">
+              <%= link_to courses_new2_path do %>
+                <span class="glyphicon glyphicon-chevron-right"></span> Create a new Course
+              <% end %>
+            </li>
+          <% end %>
+
+
+
+
+
+          <% if teacher_logged_in? %>
+            <li class="list-group-item">
+              <%= link_to courses_path do %>
+                <span class="glyphicon glyphicon-chevron-right"></span> The Course you teach
+                <span class="label label-info pull-right"><%= current_user.teaching_courses.count %></span>
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to new_course_path do %>
+                <span class="glyphicon glyphicon-chevron-right"></span> Create a new Course
+              <% end %>
+            </li>
+          <% end %>
+
+          <% if student_logged_in? %>
+            <li class="list-group-item">
+              <%= link_to list_courses_path do %>
+                <span class="glyphicon glyphicon-chevron-right"></span> Enroll
+                <span class="label label-info pull-right"><%= (Course.where(:status => "OPEN") - current_user.courses).count %></span>
+              <% end %>
+            </li>
+            <li class="list-group-item">
+              <%= link_to courses_path do %>
+                <span class="glyphicon glyphicon-chevron-right"></span> Enrolled
+                <span class="label label-info pull-right"><%= current_user.courses.count %></span>
+              <% end %>
+            </li>
+          <% end %>
+
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <% if teacher_logged_in? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <% if teacher_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#GradeCollapse"><span class="glyphicon glyphicon-user"></span>
+              Enrollment Management</a>
+          <% end %>
+        </h4>
+      </div>
+
+      <div id="GradeCollapse" class="panel-collapse collapse <%= "in" if ["enrollments"].include?(params[:controller]) %>">
+        <div class="list-group">
+
+          <% if teacher_logged_in? %>
+            <% current_user.teaching_courses.each do |course| %>
+              <%#= course.name %>
+              <li class="list-group-item">
+                <%= link_to enrollments_path(course_id: course.id), :method => :get do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> <%= course.name %>
+                  <span class="label label-info pull-right"><%= course.users.length %></span>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if teacher_logged_in? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <% if teacher_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#AddStudentCollapse"><span class="glyphicon glyphicon-user"></span>
+              Add Enrollments</a>
+          <% end %>
+        </h4>
+      </div>
+
+      <div id="AddStudentCollapse" class="panel-collapse collapse <%= "in" if ["enrollments"].include?(params[:controller]) %>">
+        <div class="list-group">
+
+          <% if teacher_logged_in? %>
+            <% current_user.teaching_courses.where(:status => "OPEN").each do |course| %>
+              <li class="list-group-item">
+                <%= link_to new_enrollment_path(course_id: course.id), :method => :get do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> <%= course.name %>
+<!--                  <span class="label label-info pull-right"><%#= course.users.length %></span>-->
+                <% end %>
+              </li>
+            <% end %>
+
+          <% end %>
+
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if admin_logged_in? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <% if admin_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#adminUserCollapse"><span class="glyphicon glyphicon-user"></span>
+              Edit Users</a>
+          <% end %>
+        </h4>
+      </div>
+
+      <div id="adminUserCollapse" class="panel-collapse collapse <%= "in" if ["enrollments"].include?(params[:controller]) || ["courses"].include?(params[:controller]) %>">
+        <div class="list-group">
+
+          <% if admin_logged_in? %>
+
+            <li class="list-group-item">
+              <%= link_to users_url, :method => :get do %>
+                <span class="glyphicon glyphicon-chevron-right"></span> <%= "user" %>
+              <% end %>
+            </li>
+
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if admin_logged_in? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <% if admin_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#adminEnrollmentCollapse"><span class="glyphicon glyphicon-user"></span>
+              Enrollment Management</a>
+          <% end %>
+        </h4>
+      </div>
+
+      <div id="adminEnrollmentCollapse" class="panel-collapse collapse <%= "in" if ["enrollments"].include?(params[:controller]) %>">
+        <div class="list-group">
+
+          <% if admin_logged_in? %>
+
+            <% Course.all.each do |course| %>
+              <%#= course.name %>
+              <li class="list-group-item">
+                <%= link_to enrollments_path(course_id: course.id), :method => :get do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> <%= course.name %>
+                  <span class="label label-info pull-right"><%= course.users.length %></span>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+
+  <% if admin_logged_in? %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <% if admin_logged_in? %>
+            <a data-toggle="collapse" data-parent="#accordion" href="#adminEnrollment2Collapse"><span class="glyphicon glyphicon-user"></span>
+              Add Enrollment</a>
+          <% end %>
+        </h4>
+      </div>
+
+      <div id="adminEnrollment2Collapse" class="panel-collapse collapse <%= "in" if ["enrollments"].include?(params[:controller]) %>">
+        <div class="list-group">
+
+          <% if admin_logged_in? %>
+
+            <% Course.where(:status => "OPEN").each do |course| %>
+              <%#= course.name %>
+              <li class="list-group-item">
+                <%= link_to new_enrollment_path(course_id: course.id), :method => :get do %>
+                  <span class="glyphicon glyphicon-chevron-right"></span> <%= course.name %>
+                  <span class="label label-info pull-right"><%= (User.where(:admin => false).where(:teacher => false) - course.users).count %></span>
+                <% end %>
+              </li>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

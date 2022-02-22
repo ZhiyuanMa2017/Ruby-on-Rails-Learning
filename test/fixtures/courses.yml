@@ -1,0 +1,26 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: 'course one'
+  description: 'course one des'
+  weekday_one: 'Mon'
+  weekday_two: 'Tue'
+  start_time: '11:11'
+  end_time: '12:12'
+  course_code: 'abc123'
+  capacity: 1
+  class_room: 'room1'
+  teacher_id: 1
+
+two:
+  name: 'course one'
+  description: 'course one des'
+  weekday_one: 'Mon'
+  weekday_two: 'Tue'
+  start_time: '11:11'
+  end_time: '12:12'
+  course_code: 'bcd123'
+  capacity: 1
+  status: 'CLOSED'
+  class_room: 'room1'
+  teacher_id: 1

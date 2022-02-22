@@ -1,0 +1,40 @@
+<div class="row">
+  <div class="col-sm-offset-4 col-sm-4">
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <h4><span class="glyphicon glyphicon-lock"></span> Log in Page</h4>
+      </div>
+      <div class="panel-body">
+
+        <%= form_for(:session, url: sessions_login_path, method: :post, html: {role: 'form'}) do |f| %>
+          <div class="form-group">
+            <%= f.label :email, "Log in" %>
+            <div class="input-group">
+              <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+              <%= f.email_field :email, class: 'form-control', placeholder: "Enter your email" %>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-group">
+              <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+              <%= f.password_field :password, class: 'form-control', placeholder: "Enter your password" %>
+            </div>
+          </div>
+
+          <%= button_tag(type: "submit", class: "btn btn-success btn-block") do %>
+            <span class="glyphicon glyphicon-off"></span>Log in
+          <% end %>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+

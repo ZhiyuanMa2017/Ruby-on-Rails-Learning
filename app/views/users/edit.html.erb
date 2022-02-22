@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-2">
+      <%= render "shared/sidenav" %>
+    </div>
+
+    <div class="col-sm-10">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <% if admin_logged_in? %><h3 class="panel-title"> Edit Users </h3>
+          <% end %>
+        </div>
+        <div class="panel-body" style="min-height: 450px">
+
+
+          <% if @user.admin == true %>
+            <h1>Editing Admin</h1>
+            <%= render 'formAdmin', user: @user %>
+          <% elsif @user.teacher == true %>
+            <h1>Editing Instructor</h1>
+            <%= render 'form', user: @user %>
+          <% else %>
+            <h1>Editing Student</h1>
+            <%= render 'form2', user: @user %>
+          <% end %>
+
+
+
+<!--          <%#= link_to 'Show', @user %> |-->
+          <%= link_to 'Back', users_path %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

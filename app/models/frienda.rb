@@ -1,2 +1,0 @@
-class Frienda < ApplicationRecord
-end
