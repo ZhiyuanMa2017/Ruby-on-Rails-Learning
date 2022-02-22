@@ -4,7 +4,7 @@
 * Ruby-3.0.3
 * Rails-6.1.4.6
 
-Our Heroku app link: https://lit-coast-45306.herokuapp.com    
+Heroku app link: https://c-e-s.herokuapp.com 
 
 ## Log in as an Admin:
 
